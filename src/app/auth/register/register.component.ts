@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Validation from '../utils/validation';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent{
+export class RegisterComponent {
 
   isLinear = true;
   firstFormGroup: FormGroup;
@@ -14,10 +14,18 @@ export class RegisterComponent{
 
   constructor(public _formBuilder: FormBuilder) {
     this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
     });
     this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]]
+    }, {
+      validators: [Validation.match('password','confirmPassword')]
     });
+  }
+
+  submitForm(){
+    let data = this.firstFormGroup.controls;
+    let data2 = this.secondFormGroup.controls;
   }
 }

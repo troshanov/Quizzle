@@ -1,15 +1,25 @@
 <main class="form-signin">
-    <form>
+    {{f.valid}}
+    <form #f="ngForm" (ngSubmit)="onLogin(f)">
         <img class="mb-4" src="../../../assets/images/quizzle-logo.png" alt="" width="150px" height="130">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
+        
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input #emailInput="ngModel" name="emailInput" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" ngModel required email>
             <label for="floatingInput">Email address</label>
+            <ul *ngIf="emailInput.invalid && emailInput.touched" class="errors">
+                <li *ngIf="emailInput.errors?.['required']">Email is required</li>
+                <li *ngIf="emailInput.errors?.['email']">Please enter a valid email</li>
+            </ul>
         </div>
+        
         <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input #passwordInput="ngModel" type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" ngModel required minlength="5">
             <label for="floatingPassword">Password</label>
+            <ul *ngIf="passwordInput.invalid && passwordInput.touched" class="errors">
+                <li *ngIf="passwordInput.errors?.['required']">Password is required</li>
+                <li *ngIf="passwordInput.errors?.['minlength']">Password must be at least 6 characters long</li>
+            </ul>
         </div>
 
         <div class="checkbox mb-3">

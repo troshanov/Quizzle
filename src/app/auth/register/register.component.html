@@ -9,25 +9,35 @@
                 <mat-stepper [linear]="isLinear" orientation="vertical" #stepper>
                     <mat-step [stepControl]="firstFormGroup">
                         <form [formGroup]="firstFormGroup">
-                            <ng-template matStepLabel>Fill out your name</ng-template>
+                            <ng-template matStepLabel>Fill out your account details</ng-template>
                             <mat-form-field appearance="fill">
-                                <mat-label>Name</mat-label>
-                                <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+                                <mat-label>Email</mat-label>
+                                <input matInput #emailInput="matInput" placeholder="Email Address" formControlName="email" required>
+                                <mat-error *ngIf="firstFormGroup.get('email')?.hasError('required')">Email field is required</mat-error>
+                                <mat-error *ngIf="firstFormGroup.get('email')?.hasError('email')">Please enter a valid eamil</mat-error>
                             </mat-form-field>
                             <div>
                                 <button mat-button matStepperNext>Next</button>
                             </div>
                         </form>
                     </mat-step>
-                    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+                    <mat-step [stepControl]="secondFormGroup" label="Fill in your Password">
                         <form [formGroup]="secondFormGroup">
                             <mat-form-field appearance="fill">
-                                <mat-label>Address</mat-label>
-                                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                                <mat-label>Password</mat-label>
+                                <input matInput type="password" formControlName="password" placeholder="At least 6 chars" required>
+                                <mat-error *ngIf="secondFormGroup.get('password')?.hasError('required')">Password field is required</mat-error>
+                                <mat-error *ngIf="secondFormGroup.get('password')?.hasError('minlength')">Must be at least 6 chars</mat-error>
+
+                            </mat-form-field>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Confirm Password</mat-label>
+                                <input matInput type="password" formControlName="confirmPassword" placeholder="Must match password" required>
+                                <mat-error *ngIf="secondFormGroup.get('confirmPassword')?.hasError('matching')">Must match password</mat-error>
                             </mat-form-field>
                             <div>
                                 <button mat-button matStepperPrevious>Back</button>
-                                <button mat-button matStepperNext>Next</button>
+                                <button mat-button (click)="submitForm()" matStepperNext>Next</button>
                             </div>
                         </form>
                     </mat-step>
