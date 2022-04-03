@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProblemsServiceService } from './problems-service.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'quizzle';
+  problem: any;
+
+  constructor(public service: ProblemsServiceService) {
+
+  }
+
+  GetUsers(){
+    this.service.getProblem().subscribe((data) => this.problem = data);
+  }
 }
