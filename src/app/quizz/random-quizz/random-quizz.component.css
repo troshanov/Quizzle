@@ -1,0 +1,37 @@
+.content-container {
+    width: 100%;
+    max-width: 75%;
+    padding: 15px;
+    margin: auto;
+}
+
+.quizz-container {
+    background-image: url(../../../assets/images/quizz/mythology.jpg);
+    border-color: #b192e4 !important;
+    padding:15%;
+    align-items: center;
+    display:inline-grid;
+}
+
+.question-container{
+    background-color: #b192e4;
+    opacity: 0.5;
+    padding-top: 10px;
+}
+
+div.question-container p{
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-list-base .mat-list-option {
+    color: ivory;
+    font-weight: bold;
+}
+
+.mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus {
+    background: rgb(177 146 228 / 50%);
+    border-radius: 50rem !important;
+}

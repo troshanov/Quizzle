@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
+import { QuizzModule } from './quizz/quizz.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SharedModule } from './shared/shared.module';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    SharedModule
+    SharedModule,
+    QuizzModule
   ],
   providers: [
   ],
