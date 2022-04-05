@@ -1,7 +1,16 @@
-.mat-stepper-horizontal {
+.mat-stepper-vertical {
     margin-top: 8px;
+    background-color: ivory;
+    width: 350px !important;
 }
-  
+
 .mat-form-field {
     margin-top: 16px;
+}
+
+.form-register {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
 }
