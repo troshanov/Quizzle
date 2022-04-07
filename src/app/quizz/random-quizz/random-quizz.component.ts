@@ -8,7 +8,10 @@ import { QuizzService } from 'src/app/shared/services/quizz.service';
   templateUrl: './random-quizz.component.html',
   styleUrls: ['./random-quizz.component.css']
 })
-export class RandomQuizzComponent{
+export class RandomQuizzComponent {
+
+  fiftyfiftyIsUsed: boolean;
+  skipQuestionIsUsed: boolean;
 
   questions: IQuestion[];
   currentQuestion: IQuestion | undefined;
@@ -26,11 +29,16 @@ export class RandomQuizzComponent{
         this.shuffle(this.currentAnswers)
       });
   }
-  // ngOnDestroy(): void {
-  //   this.$stream.unsubscribe();
-  // }
 
-  private shuffle(a:string[]) {
+  fiftyFiftyClickHandler(){
+    this.fiftyfiftyIsUsed = true;
+  }
+
+  skipQuestionClickHandler(){
+    this.skipQuestionIsUsed = true;
+  }
+
+  private shuffle(a: string[]) {
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];

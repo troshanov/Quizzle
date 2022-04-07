@@ -7,9 +7,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { QuizzService } from './services/quizz.service';
+import { UrlDecoderPipe } from './pipes/url-decoder.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    UrlDecoderPipe
+  ],
   imports: [
     CommonModule,
     MaterialExampleModule,
@@ -25,7 +28,8 @@ import { QuizzService } from './services/quizz.service';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    UrlDecoderPipe
   ],
   providers:[
     QuizzService

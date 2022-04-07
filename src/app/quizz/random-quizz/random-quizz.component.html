@@ -1,17 +1,28 @@
 <div class="content-container row align-items-center h-100">
     <div class="border border-5 rounded-pill quizz-container h-100">
         <div class="row">
-            <div class="col-12 mb-5 question-container rounded-pill">
+            <div class="col-12 mb-5 question-container border border-4 rounded-pill">
                 <p>
-                    {{currentQuestion?.question}}
+                    {{currentQuestion?.question | urlDecoder}}
                 </p>
             </div>
             <div class="answers-container col-12">
                 <mat-selection-list #inputAnswers [multiple]="false">
                     <mat-list-option *ngFor="let answer of currentAnswers" [value]="answer">
-                        {{answer}}
+                        {{answer | urlDecoder}}
                     </mat-list-option>
                 </mat-selection-list>
+            </div>
+            <div class="buttons-container mt-5">
+                <button mat-fab aria-label="Example icon button with a autorenew icon">
+                    <mat-icon>autorenew</mat-icon>
+                </button>
+                <button mat-fab aria-label="Example icon button with a autorenew icon" (click)="fiftyFiftyClickHandler()" [disabled]="fiftyfiftyIsUsed" [class.used-joker]="fiftyfiftyIsUsed">
+                    50:50
+                </button>
+                <button mat-fab aria-label="Example icon button with a autorenew icon" (click)="skipQuestionClickHandler()" [disabled]="skipQuestionIsUsed" [class.used-joker]="skipQuestionIsUsed">
+                    <mat-icon>skip_next</mat-icon>
+                </button>
             </div>
         </div>
     </div>

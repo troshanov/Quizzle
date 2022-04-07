@@ -7,23 +7,27 @@
 
 .quizz-container {
     background-image: url(../../../assets/images/quizz/mythology.jpg);
-    border-color: #b192e4 !important;
-    padding:15%;
+    border-color: #b192e4;
+    padding: 15%;
     align-items: center;
-    display:inline-grid;
+    display: inline-grid;
 }
 
-.question-container{
+.question-container {
     background-color: #b192e4;
     opacity: 0.5;
-    padding-top: 10px;
+    display: inline-grid;
+    height: 100px;
+    align-content: center;
 }
 
-div.question-container p{
+.question-container p {
     font-weight: bold;
     color: black;
     text-align: center;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0px;
+    font-size: 110%;
 }
 
 .mat-list-base .mat-list-option {
@@ -31,7 +35,56 @@ div.question-container p{
     font-weight: bold;
 }
 
-.mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus {
-    background: rgb(177 146 228 / 50%);
-    border-radius: 50rem !important;
+.mat-list-single-selected-option,
+.mat-list-single-selected-option:hover,
+.mat-list-single-selected-option:focus {
+    background: rgb(177 146 228 / 50%) !important;
+    border-radius: 50rem;
+}
+
+.mat-list-base .mat-list-item {
+    background: rgb(232 229 237 / 50%);
+    border-radius: 50rem;
+    margin-bottom: 10px;
+}
+
+::ng-deep .mat-list-item-ripple {
+    border-radius: 50rem;
+}
+
+.mat-list-item:hover {
+    background: rgb(177 146 228 / 50%) !important;
+}
+
+.correct-answer {
+    animation: blinker 1s linear infinite;
+    background-color: rgba(48, 219, 88, 0.5) !important;
+}
+
+.incorrect-answer{
+    animation: blinker 1s linear infinite;
+    background-color: rgba(219, 48, 48, 0.5) !important;
+}
+
+.buttons-container{
+    display: flex;
+    justify-content: center;
+}
+
+.mat-fab.mat-accent {
+    background-color: #b192e4;
+    margin-right: 50px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-weight: bold;
+    border: 1px solid #b192e4 !important;
+}
+
+.used-joker{
+    background-color: grey;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
 }

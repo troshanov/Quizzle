@@ -15,6 +15,6 @@ export class QuizzService {
   constructor(private client: HttpClient) { }
 
   getRandom(): Observable<any>{
-    return this.client.get<any>(`${apiUrl}/api.php?amount=15&type=multiple`);
+    return this.client.get<any>(`${apiUrl}/api.php?amount=15&type=multiple&encode=url3986`);
   }
 }
