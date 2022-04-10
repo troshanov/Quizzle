@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>Failed Quizz</h2>
+<mat-dialog-content>You've failed the quizz and borught shame on your ancestors. Try again or give up?</mat-dialog-content>
+<div mat-dialog-actions>
+    <a routerLink="quizz/random" (click)="retryClickHandler()"><button mat-button mat-dialog-close>Retry</button></a>
+    <a routerLink="login"><button mat-button mat-dialog-close>Close</button></a>
+</div>

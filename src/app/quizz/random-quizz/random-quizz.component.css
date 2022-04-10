@@ -68,6 +68,10 @@
     background-color: rgba(219, 48, 48, 0.5) !important;
 }
 
+.eliminated-answer{
+    visibility: hidden;
+}
+
 .buttons-container{
     display: flex;
     justify-content: center;

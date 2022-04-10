@@ -11,6 +11,8 @@
                     {{currentQuestion?.question}}
                 </p>
             </div>
+        </div>
+        <div class="row">
             <div class="answers-container col-12">
                 <mat-selection-list #inputAnswers [multiple]="false">
                     <mat-list-option (click)="selectAnswerHandler(inputAnswers)" [disabled]="hasSelectedAnswer" *ngFor="let answer of currentAnswers" [value]="answer">
@@ -22,7 +24,7 @@
                 <button mat-fab aria-label="Example icon button with a autorenew icon" (click)="getQuestions()" [disabled]="hasSelectedCorrectAnswer">
                     <mat-icon>autorenew</mat-icon>
                 </button>
-                <button mat-fab aria-label="Example icon button with a autorenew icon" (click)="fiftyFiftyClickHandler()" [disabled]="fiftyfiftyIsUsed || hasSelectedAnswer" [class.used-joker]="fiftyfiftyIsUsed">
+                <button mat-fab aria-label="Example icon button with a autorenew icon" (click)="fiftyFiftyClickHandler(inputAnswers)" [disabled]="fiftyfiftyIsUsed || hasSelectedAnswer" [class.used-joker]="fiftyfiftyIsUsed">
                     50:50
                 </button>
                 <button mat-fab aria-label="Example icon button with a autorenew icon" (click)="skipQuestionClickHandler()" [disabled]="skipQuestionIsUsed || hasSelectedAnswer" [class.used-joker]="skipQuestionIsUsed">

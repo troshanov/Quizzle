@@ -6,6 +6,8 @@ import { Renderer2 } from '@angular/core';
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { delay } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-random-quizz',
@@ -24,22 +26,36 @@ export class RandomQuizzComponent {
 
   questions: IQuestion[];
   currentQuestion: IQuestion | undefined;
+  bonusQuestion: IQuestion | undefined;
   currentAnswers: string[];
   currentCorrectAnswer: string | undefined;
+
+  dialogConfigs: MatDialogConfig = new MatDialogConfig()
 
   constructor(
     private utilityService: UtilityService,
     private quizzService: QuizzService,
-    private render: Renderer2) {
+    private render: Renderer2,
+    public dialog: MatDialog) {
+
     this.getQuestions();
+    this.dialogConfigs.disableClose = true;
   }
 
-  fiftyFiftyClickHandler() {
+  fiftyFiftyClickHandler(answers: MatSelectionList) {
     this.fiftyfiftyIsUsed = true;
+    const firstEliminated = answers.options.find(a => a.value !== this.currentCorrectAnswer);
+    const secondEliminated = answers.options.find(a => a.value !== this.currentCorrectAnswer && a.value !== firstEliminated?.value);
+
+    this.render.addClass(firstEliminated?._getHostElement(), 'eliminated-answer');
+    this.render.addClass(secondEliminated?._getHostElement(), 'eliminated-answer');
   }
 
   skipQuestionClickHandler() {
     this.skipQuestionIsUsed = true;
+    this.utilityService.decodeQuestionStringValues(this.bonusQuestion);
+    this.currentQuestion = this.bonusQuestion;
+    this.setAnswers(this.currentQuestion);
   }
 
   selectAnswerHandler(answers: MatSelectionList) {
@@ -52,13 +68,9 @@ export class RandomQuizzComponent {
       this.render.addClass(selectedAnswer._getHostElement(), "incorrect-answer");
       this.render.addClass(correctAnswer?._getHostElement(), "correct-answer");
 
-      this.fiftyfiftyIsUsed = true;
-      this.skipQuestionIsUsed = true;
-
-      //call modal with fail message
       return;
     }
-    
+
     this.hasSelectedCorrectAnswer = true;
     this.render.addClass(correctAnswer?._getHostElement(), "correct-answer");
 
@@ -66,10 +78,13 @@ export class RandomQuizzComponent {
       .subscribe(() => this.loadNextQuestion());
   }
 
-  getQuestions(){
+  getQuestions() {
     this.quizzService.getRandom()
       .subscribe((data: any) => {
         this.questions = data.results;
+        this.bonusQuestion = this.questions.shift();
+        this.fiftyfiftyIsUsed = false;
+        this.skipQuestionIsUsed = false;
         this.numberOfQuestions = data.results.length;
         this.currentQuestionNumber = 0;
         this.loadNextQuestion();
@@ -94,14 +109,18 @@ export class RandomQuizzComponent {
 
       //Setup current question and answers
       this.utilityService.decodeQuestionStringValues(this.currentQuestion);
-      this.currentAnswers = this.currentQuestion?.incorrect_answers ?? [];
-      this.currentAnswers?.push(this.currentQuestion?.correct_answer ?? '');
-      this.shuffle(this.currentAnswers);
-      this.currentCorrectAnswer = this.currentQuestion?.correct_answer;
+      this.setAnswers(this.currentQuestion);
     }
     else {
-      //call modal with success message
+      this.dialog.open(SuccessDialogComponent, this.dialogConfigs);
     }
+  }
+
+  private setAnswers(question: IQuestion | undefined): void{
+    this.currentAnswers = question?.incorrect_answers ?? [];
+    this.currentAnswers?.push(question?.correct_answer ?? '');
+    this.shuffle(this.currentAnswers);
+    this.currentCorrectAnswer = question?.correct_answer;
   }
 
   private shuffle(a: string[]) {
