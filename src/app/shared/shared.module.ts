@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { QuizzService } from './services/quizz.service';
 import { UrlDecoderPipe } from './pipes/url-decoder.pipe';
+import { UtilityService } from './services/utility.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UrlDecoderPipe } from './pipes/url-decoder.pipe';
     UrlDecoderPipe
   ],
   providers:[
-    QuizzService
+    QuizzService,
+    UtilityService
   ]
 })
 export class SharedModule { }

@@ -13,6 +13,10 @@
     display: inline-grid;
 }
 
+.progress-container{
+    justify-content: center;
+}
+
 .question-container {
     background-color: #b192e4;
     opacity: 0.5;
@@ -38,7 +42,7 @@
 .mat-list-single-selected-option,
 .mat-list-single-selected-option:hover,
 .mat-list-single-selected-option:focus {
-    background: rgb(177 146 228 / 50%) !important;
+    background: rgb(177 146 228 / 50%);
     border-radius: 50rem;
 }
 
@@ -60,9 +64,7 @@
     animation: blinker 1s linear infinite;
     background-color: rgba(48, 219, 88, 0.5) !important;
 }
-
 .incorrect-answer{
-    animation: blinker 1s linear infinite;
     background-color: rgba(219, 48, 48, 0.5) !important;
 }
 
