@@ -79,7 +79,7 @@ export class RandomQuizzComponent {
   }
 
   getQuestions() {
-    this.quizzService.getRandom()
+    this.quizzService.getQuestions()
       .subscribe((data: any) => {
         this.questions = data.results;
         this.bonusQuestion = this.questions.shift();

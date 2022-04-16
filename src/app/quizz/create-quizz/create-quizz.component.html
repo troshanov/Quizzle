@@ -1,0 +1,43 @@
+<p>create-quizz works!</p>
+<div class="example-container">
+    <form [formGroup]="options">
+        <div>
+            <label>Difficulty: </label>
+            <mat-radio-group (change)="onDifficultyChange($event)" formControlName="difficulty">
+                <mat-radio-button value="">Any</mat-radio-button>
+                <mat-radio-button value="easy">Easy</mat-radio-button>
+                <mat-radio-button value="medium">Medium</mat-radio-button>
+                <mat-radio-button value="hard">Hard</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <mat-form-field appearance="fill">
+            <mat-select (selectionChange)="onCategoryChange()" formControlName="category">
+                <mat-option>-- Any --</mat-option>
+                <mat-option *ngFor="let cat of this.categories" [value]="cat.id">{{cat.name}}</mat-option>
+            </mat-select>
+            <mat-label> <b>Category</b></mat-label>
+        </mat-form-field>
+
+        <div cdkDropListGroup>
+            <h1>Questions</h1>
+            <div cdkDropList [cdkDropListData]="loadedQuestions" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let loadedQuestion of loadedQuestions" cdkDrag>
+                    {{loadedQuestion.question}}</div>
+            </div>
+
+            <h2>Your quizz</h2>
+            <div cdkDropList [cdkDropListData]="quizzQuestions" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let quizzQuestion of quizzQuestions" cdkDrag>{{quizzQuestion.question}}
+                </div>
+            </div>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="Simple Quizz Name" formControlName="title">
+            <mat-error *ngIf="options.get('title')?.hasError('required')">Title field is required</mat-error>
+            <mat-error *ngIf="options.get('title')?.hasError('minlength')">Must be at least 4 chars</mat-error>
+        </mat-form-field>
+    </form>
+</div>
