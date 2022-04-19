@@ -8,6 +8,7 @@ import { delay } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
+import { ITokenResponse } from 'src/app/shared/interfaces/token-response';
 
 @Component({
   selector: 'app-random-quizz',
@@ -29,6 +30,7 @@ export class RandomQuizzComponent {
   bonusQuestion: IQuestion | undefined;
   currentAnswers: string[];
   currentCorrectAnswer: string | undefined;
+  questionApiToken: string;
 
   dialogConfigs: MatDialogConfig = new MatDialogConfig()
 
@@ -37,6 +39,11 @@ export class RandomQuizzComponent {
     private quizzService: QuizzService,
     private render: Renderer2,
     public dialog: MatDialog) {
+
+    this.quizzService.getToken()
+      .subscribe((data) => {
+        this.questionApiToken = (data as ITokenResponse).token;
+      });
 
     this.getQuestions();
     this.dialogConfigs.disableClose = true;
@@ -79,7 +86,7 @@ export class RandomQuizzComponent {
   }
 
   getQuestions() {
-    this.quizzService.getQuestions()
+    this.quizzService.getQuestions(this.questionApiToken)
       .subscribe((data: any) => {
         this.questions = data.results;
         this.bonusQuestion = this.questions.shift();
@@ -116,7 +123,7 @@ export class RandomQuizzComponent {
     }
   }
 
-  private setAnswers(question: IQuestion | undefined): void{
+  private setAnswers(question: IQuestion | undefined): void {
     this.currentAnswers = question?.incorrect_answers ?? [];
     this.currentAnswers?.push(question?.correct_answer ?? '');
     this.shuffle(this.currentAnswers);

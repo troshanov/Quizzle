@@ -1,43 +1,87 @@
-<p>create-quizz works!</p>
 <div class="example-container">
+    <h1>Create Quizz</h1>
     <form [formGroup]="options">
-        <div>
-            <label>Difficulty: </label>
-            <mat-radio-group (change)="onDifficultyChange($event)" formControlName="difficulty">
-                <mat-radio-button value="">Any</mat-radio-button>
-                <mat-radio-button value="easy">Easy</mat-radio-button>
-                <mat-radio-button value="medium">Medium</mat-radio-button>
-                <mat-radio-button value="hard">Hard</mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <mat-form-field appearance="fill">
-            <mat-select (selectionChange)="onCategoryChange()" formControlName="category">
-                <mat-option>-- Any --</mat-option>
-                <mat-option *ngFor="let cat of this.categories" [value]="cat.id">{{cat.name}}</mat-option>
-            </mat-select>
-            <mat-label> <b>Category</b></mat-label>
-        </mat-form-field>
+        <div class="row form-container mt-5">
 
-        <div cdkDropListGroup>
-            <h1>Questions</h1>
-            <div cdkDropList [cdkDropListData]="loadedQuestions" class="example-list"
-                (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let loadedQuestion of loadedQuestions" cdkDrag>
-                    {{loadedQuestion.question}}</div>
+            <div class="row mt-4">
+                <div class="col-3">
+                    <mat-form-field class="name-form-field" appearance="fill">
+                        <input matInput placeholder="Simple Quizz Name" formControlName="title">
+                        <mat-error *ngIf="options.get('title')?.hasError('required')">Title field is required</mat-error>
+                        <mat-error *ngIf="options.get('title')?.hasError('minlength')">Must be at least 4 chars</mat-error>
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-4">
+                    <mat-form-field class="cat-form-field" appearance="fill">
+                        <mat-select (selectionChange)="reloadQuestions()" formControlName="category">
+                            <mat-option>-- Any --</mat-option>
+                            <mat-option *ngFor="let cat of this.categories" [value]="cat.id">{{cat.name}}</mat-option>
+                        </mat-select>
+                        <mat-label> <b>Category</b></mat-label>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-5 p-3">
+                    <label>Difficulty: </label>
+                    <mat-radio-group (change)="onDifficultyChange($event)" formControlName="difficulty">
+                        <mat-radio-button value="">Any</mat-radio-button>
+                        <mat-radio-button value="easy">Easy</mat-radio-button>
+                        <mat-radio-button value="medium">Medium</mat-radio-button>
+                        <mat-radio-button value="hard">Hard</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+    
             </div>
 
-            <h2>Your quizz</h2>
-            <div cdkDropList [cdkDropListData]="quizzQuestions" class="example-list"
-                (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let quizzQuestion of quizzQuestions" cdkDrag>{{quizzQuestion.question}}
+            <div class="row mt-4" cdkDropListGroup>
+                <div class="question-container col-4">
+                    <h2>Questions</h2>
+                    <div cdkDropList [cdkDropListData]="loadedQuestions" class="example-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" *ngFor="let loadedQuestion of loadedQuestions" cdkDrag>
+                            {{loadedQuestion.question}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-5 mt-4">
+                            <button (click)="reloadQuestions()" mat-mini-fab
+                                aria-label="Example icon button with a autorenew icon">
+                                <mat-icon>autorenew</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container col-4">
+                    <h2>Your Quizz</h2>
+                    <div #questionBox (click)="questionsAreTouched=true" cdkDropList [cdkDropListData]="quizzQuestions"
+                        class="example-list" (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" *ngFor="let quizzQuestion of quizzQuestions" cdkDrag>
+                            {{quizzQuestion.question}}
+                        </div>
+                    </div>
+                    <mat-error *ngIf="(questionsAreTouched && canDropQuestions)">Quizz must contain 15 questions
+                    </mat-error>
+                </div>
+
+                <div class="question-container col-4">
+                    <h2>Bonus question</h2>
+                    <div (click)="bonusQuestionIsTouched=true" #bonusQuestion cdkDropList
+                        [cdkDropListData]="bonusQuestions" class="example-list" (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" *ngFor="let bonus of bonusQuestions" cdkDrag>
+                            {{bonus.question}}</div>
+                    </div>
+                    <mat-error *ngIf="(bonusQuestionIsTouched && canDropBonusQuestion)">Bonus question is required
+                    </mat-error>
                 </div>
             </div>
-        </div>
 
-        <mat-form-field appearance="fill">
-            <input matInput placeholder="Simple Quizz Name" formControlName="title">
-            <mat-error *ngIf="options.get('title')?.hasError('required')">Title field is required</mat-error>
-            <mat-error *ngIf="options.get('title')?.hasError('minlength')">Must be at least 4 chars</mat-error>
-        </mat-form-field>
+            <div class="mt-4 d-flex justify-content-center">
+                <button class="w-50" mat-flat-button color="primary"
+                    [disabled]="!options.valid || canDropQuestions || canDropBonusQuestion"
+                    (click)="submitQuizz()">Submit
+                </button>
+            </div>
+        </div>
     </form>
 </div>

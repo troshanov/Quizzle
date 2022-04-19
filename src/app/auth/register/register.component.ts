@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Validation from '../utils/validation';
+import Validation from '../../shared/validation/validation';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

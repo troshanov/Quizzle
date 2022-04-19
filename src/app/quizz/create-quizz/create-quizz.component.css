@@ -1,9 +1,17 @@
+.example-container{
+  padding:2%;
+}
+
 .example-container .mat-form-field+.mat-form-field {
   margin-left: 8px;
 }
 
-.example-container .mat-form-field {
-  width: 220px;
+.example-container .cat-form-field {
+  width: 400px;
+}
+
+.example-container .name-form-field{
+  width: 300px;
 }
 
 .example-container form {
@@ -18,10 +26,16 @@
   margin: 0 12px;
 }
 
+.question-container {
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .example-list {
-  border: solid 1px #ccc;
+  border: solid 1px black;
   min-height: 60px;
-  background: white;
+  background: rgba(0,0,0,.04);
   border-radius: 4px;
   overflow: hidden;
   display: block;
@@ -29,7 +43,7 @@
 
 .example-box {
   padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
+  border-bottom: solid 1px black;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
   flex-direction: row;
@@ -37,7 +51,7 @@
   justify-content: space-between;
   box-sizing: border-box;
   cursor: move;
-  background: white;
+  background-color: rgb(177, 146, 228, 0.5);
   font-size: 14px;
 }
 
