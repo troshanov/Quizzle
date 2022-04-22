@@ -33,6 +33,10 @@ export class CreateQuizzComponent {
   bonusQuestionIsTouched: boolean = false;
   allQuestionsIndex: number;
   questionApiToken: string;
+  isLinear: boolean = true;
+
+  titleFormGroup: FormGroup;
+  quizzFormGroup: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -42,16 +46,19 @@ export class CreateQuizzComponent {
       .subscribe((data) => {
         this.categories = data.trivia_categories as ICategory[];
       });
-    
+
     quizzService.getToken()
       .subscribe((data) => {
         this.questionApiToken = (data as ITokenResponse).token;
       });
 
-    this.options = this.fb.group({
+    this.titleFormGroup = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(4)]]
+    });
+
+    this.quizzFormGroup = this.fb.group({
       difficulty: [''],
       category: [''],
-      title: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
@@ -86,8 +93,8 @@ export class CreateQuizzComponent {
 
   reloadQuestions() {
     this.loadedQuestions = [];
-    const diff = this.options.controls['difficulty'].value as string;
-    const cat = this.options.controls['category'].value as number;
+    const diff = this.quizzFormGroup.controls['difficulty'].value as string;
+    const cat = this.quizzFormGroup.controls['category'].value as number;
 
     this.quizzService.getQuestions(this.questionApiToken, diff, cat)
       .subscribe((data) => {
