@@ -9,10 +9,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuizzService } from './services/quizz.service';
 import { UrlDecoderPipe } from './pipes/url-decoder.pipe';
 import { UtilityService } from './services/utility.service';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthService } from './services/auth.service';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
-    UrlDecoderPipe
+    UrlDecoderPipe,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +25,8 @@ import { UtilityService } from './services/utility.service';
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireAuthModule,
   ],
   exports:[
     MaterialExampleModule,
@@ -30,11 +35,13 @@ import { UtilityService } from './services/utility.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    UrlDecoderPipe
+    UrlDecoderPipe,
+    LoaderComponent
   ],
   providers:[
     QuizzService,
-    UtilityService
+    UtilityService,
+    AuthService
   ]
 })
 export class SharedModule { }

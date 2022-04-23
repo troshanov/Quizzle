@@ -17,6 +17,8 @@ import { ITokenResponse } from 'src/app/shared/interfaces/token-response';
 })
 export class RandomQuizzComponent {
 
+  isLoading: boolean = true;
+
   fiftyfiftyIsUsed: boolean;
   skipQuestionIsUsed: boolean;
   hasSelectedAnswer: boolean;
@@ -43,9 +45,9 @@ export class RandomQuizzComponent {
     this.quizzService.getToken()
       .subscribe((data) => {
         this.questionApiToken = (data as ITokenResponse).token;
+        this.getQuestions();
       });
 
-    this.getQuestions();
     this.dialogConfigs.disableClose = true;
   }
 
@@ -95,6 +97,7 @@ export class RandomQuizzComponent {
         this.numberOfQuestions = data.results.length;
         this.currentQuestionNumber = 0;
         this.loadNextQuestion();
+        this.isLoading = false;
       });
   }
 

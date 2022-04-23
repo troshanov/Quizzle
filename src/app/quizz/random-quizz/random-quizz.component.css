@@ -13,7 +13,15 @@
     display: inline-grid;
 }
 
-.progress-container{
+.loader-container {
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.progress-container {
     justify-content: center;
 }
 
@@ -63,15 +71,16 @@
     animation: blinker 1s linear infinite;
     background-color: rgba(48, 219, 88, 0.5) !important;
 }
-.incorrect-answer{
+
+.incorrect-answer {
     background-color: rgba(219, 48, 48, 0.5) !important;
 }
 
-.eliminated-answer{
+.eliminated-answer {
     visibility: hidden;
 }
 
-.buttons-container{
+.buttons-container {
     display: flex;
     justify-content: center;
 }
@@ -81,9 +90,10 @@
     font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: bold;
     border: 1px solid #b192e4 !important;
+    margin-left: 5%;
 }
 
-.used-joker{
+.used-joker {
     background-color: grey;
 }
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import Validation from '../../shared/validation/validation';
 @Component({
   selector: 'app-register',
@@ -12,7 +13,9 @@ export class RegisterComponent {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
-  constructor(public _formBuilder: FormBuilder) {
+  constructor(
+    public _formBuilder: FormBuilder,
+    private authService: AuthService) {
     this.firstFormGroup = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
@@ -20,12 +23,14 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, {
-      validators: [Validation.match('password','confirmPassword')]
+      validators: [Validation.match('password', 'confirmPassword')]
     });
   }
 
-  submitForm(){
-    let data = this.firstFormGroup.controls;
-    let data2 = this.secondFormGroup.controls;
+  submitForm() {
+    const email = this.firstFormGroup.controls["email"].value;
+    const password = this.secondFormGroup.controls["password"].value;
+
+    this.authService.SignUp(email, password);
   }
 }
