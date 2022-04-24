@@ -36,6 +36,6 @@ input.ng-invalid.ng-touched {
   /* red */
 }
 
-ul.errors {
+.errors {
   color: #ee7d7b;
 }

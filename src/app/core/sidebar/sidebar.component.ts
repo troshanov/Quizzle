@@ -13,7 +13,7 @@ export class SidebarComponent {
 
   constructor(
     private render: Renderer2,
-    private authService: AuthService) { }
+    public authService: AuthService) { }
   MouseOverHandler(event: any) {
     if (event.target.tagName.toLowerCase() === 'a') {
       this.render.addClass(event.target, "active");

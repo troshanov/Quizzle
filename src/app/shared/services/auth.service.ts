@@ -41,9 +41,6 @@ export class AuthService {
           this.router.navigate(['quizz/create']);
         });
         this.SetUserData(result.user);
-      })
-      .catch((error) => {
-        window.alert(error.message);
       });
   }
   // Sign up with email/password

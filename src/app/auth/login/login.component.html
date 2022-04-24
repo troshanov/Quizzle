@@ -2,18 +2,20 @@
     <img class="mb-5" src="../../../assets/images/quizzle-logo.png" alt="" width="inherit" height="inherit">
     <form #f="ngForm" (ngSubmit)="onLogin(f)">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-        
+
         <div class="form-floating">
-            <input #emailInput="ngModel" name="emailInput" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" ngModel required email>
+            <input #emailInput="ngModel" name="emailInput" type="email" class="form-control" id="floatingInput"
+                placeholder="name@example.com" ngModel required email>
             <label for="floatingInput">Email address</label>
             <ul *ngIf="emailInput.invalid && emailInput.touched" class="errors">
                 <li *ngIf="emailInput.errors?.['required']">Email is required</li>
                 <li *ngIf="emailInput.errors?.['email']">Please enter a valid email</li>
             </ul>
         </div>
-        
+
         <div class="form-floating">
-            <input #passwordInput="ngModel" type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" ngModel required minlength="5">
+            <input #passwordInput="ngModel" type="password" name="password" class="form-control" id="floatingPassword"
+                placeholder="Password" ngModel required minlength="5">
             <label for="floatingPassword">Password</label>
             <ul *ngIf="passwordInput.invalid && passwordInput.touched" class="errors">
                 <li *ngIf="passwordInput.errors?.['required']">Password is required</li>
@@ -27,5 +29,6 @@
             </label>
         </div>
         <button mat-flat-button color="primary" class="w-100">Sign in</button>
+        <p class="errors" *ngIf="loginFailed">Invalid login</p>
     </form>
 </main>

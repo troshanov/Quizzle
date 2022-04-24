@@ -9,13 +9,19 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class LoginComponent {
 
+  loginFailed: boolean = false;
+
   constructor(private authService: AuthService) { }
 
-  onLogin(form: NgForm) {
-    form.controls;
+  async onLogin(form: NgForm) {
+    this.loginFailed = false;
+    
     const email = form.controls["emailInput"].value;
     const password = form.controls["password"].value;
 
-    this.authService.SignIn(email, password);
+    await this.authService.SignIn(email, password)
+    .catch(() => {
+      this.loginFailed = true;
+    })
   }
 }

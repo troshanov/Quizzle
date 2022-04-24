@@ -5,50 +5,55 @@
         </div>
     </div>
     <hr>
-    <ul class="nav p-2 fs-5 nav-pills flex-column mb-auto" (mouseout)="MouseOutHandler($event)" (mouseover)="MouseOverHandler($event)">
-        <li class="nav-item mb-1">
-            <a routerLink="login" class="nav-link text-white">
-                <mat-icon>input</mat-icon>
-                <label class="nav-label">Login</label>
-            </a>
-        </li>
-        <li class="nav-item mb-1">
-            <a routerLink="register" class="nav-link text-white">
-                <mat-icon>person_add</mat-icon>
-                <label class="nav-label">Register</label>
-            </a>
-        </li>
-        <li class="nav-item mb-1">
-            <a routerLink="quizz/all" class="nav-link text-white">
-                <mat-icon>home</mat-icon>
-                <label class="nav-label">Home</label>
-            </a>
-        </li>
-        <li class="nav-item mb-1">
-            <a routerLink="quizz/create" class="nav-link text-white">
-                <mat-icon>create</mat-icon>
-                <label class="nav-label">Create Quizz</label>
-            </a>
-        </li>
-        <li class="nav-item mb-1">
-            <a routerLink="quizz/random" class="nav-link text-white">
-                <mat-icon>shuffle</mat-icon>
-                <label class="nav-label">Random Quizz</label>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a (click)="logout()" href="javascript:void(0)" class="nav-link text-white">
-                <mat-icon>exit_to_app</mat-icon>
-                <label class="nav-label">Logout</label>
-            </a>
-        </li>
+    <ul class="nav p-2 fs-5 nav-pills flex-column mb-auto" (mouseout)="MouseOutHandler($event)"
+        (mouseover)="MouseOverHandler($event)">
+        <div *ngIf="!authService.isLoggedIn">
+            <li class="nav-item mb-1">
+                <a routerLink="login" class="nav-link text-white">
+                    <mat-icon>input</mat-icon>
+                    <label class="nav-label">Login</label>
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a routerLink="register" class="nav-link text-white">
+                    <mat-icon>person_add</mat-icon>
+                    <label class="nav-label">Register</label>
+                </a>
+            </li>
+        </div>
+        <div *ngIf="authService.isLoggedIn">
+            <li class="nav-item mb-1">
+                <a routerLink="quizz/all" class="nav-link text-white">
+                    <mat-icon>home</mat-icon>
+                    <label class="nav-label">Home</label>
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a routerLink="quizz/create" class="nav-link text-white">
+                    <mat-icon>create</mat-icon>
+                    <label class="nav-label">Create Quizz</label>
+                </a>
+            </li>
+            <li class="nav-item mb-1">
+                <a routerLink="quizz/random" class="nav-link text-white">
+                    <mat-icon>shuffle</mat-icon>
+                    <label class="nav-label">Random Quizz</label>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a (click)="logout()" href="javascript:void(0)" class="nav-link text-white">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <label class="nav-label">Logout</label>
+                </a>
+            </li>
+        </div>
     </ul>
     <hr>
-    <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none"
-            data-bs-toggle="dropdown" aria-expanded="false">
+    <div *ngIf="authService.userData as user" class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown"
+            aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-            <strong>Quizzle@quizzle.com</strong>
+            <strong>{{user.email}}</strong>
         </a>
     </div>
 </div>
