@@ -12,13 +12,12 @@ import { UserService } from 'src/app/shared/services/user.service';
 export class ProfileComponent {
 
   imageSrc: string = '';
-  
-  get user(): IUser{
+
+  get user(): IUser {
     return this.authService.userData as IUser
   }
 
   myForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     file: new FormControl('', [Validators.required]),
     fileSource: new FormControl('', [Validators.required])
   });
@@ -26,7 +25,7 @@ export class ProfileComponent {
   constructor(
     private userService: UserService,
     private authService: AuthService) {
-    this.download();
+    this.downloadAvatar();
   }
 
   get f() {
@@ -47,27 +46,28 @@ export class ProfileComponent {
         this.myForm.patchValue({
           fileSource: reader.result
         });
-
       };
-
     }
   }
 
-  download() {
-    const clientId = JSON.parse(localStorage.getItem('user') as string).uid;
+  submit() {
+
+    const clientId = (this.authService.userData as IUser).uid;
+    const content = this.myForm.controls['fileSource'].value;
+    this.userService.updateProfilePicture(content, clientId)
+      .then(() => this.myForm.reset())
+      .catch((err) => alert(err.message));
+  }
+
+  resetPassword(){
+  }
+  
+  private downloadAvatar() {
+    const clientId = this.user.uid;
 
     this.userService.getUserById(clientId)
       .subscribe((data) => {
         this.imageSrc = data.photoURL;
       })
-  }
-  submit() {
-    console.log(this.myForm.value);
-
-    const clientId = (this.authService.userData as IUser).uid;
-    const content = this.myForm.controls['fileSource'].value;
-    this.userService.updateProfilePicture(content, clientId)
-      .then(() => this.download())
-      .catch((err) => alert(err.message));
   }
 }

@@ -10,7 +10,6 @@ import { QuizzService } from './services/quizz.service';
 import { UrlDecoderPipe } from './pipes/url-decoder.pipe';
 import { UtilityService } from './services/utility.service';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AuthService } from './services/auth.service';
 import { LoaderComponent } from './loader/loader.component';
 import { UserService } from './services/user.service';
 import { DropboxService } from './services/dropbox.service';
@@ -46,7 +45,6 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
   providers:[
     QuizzService,
     UtilityService,
-    AuthService,
     UserService,
     DropboxService
   ]
