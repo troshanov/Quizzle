@@ -1,5 +1,3 @@
-# Quizzle
-
 <p align="center">
   <img src="https://github.com/troshanov/quizzle/blob/main/src/assets/images/quizzle-logo.png">
 </p>
