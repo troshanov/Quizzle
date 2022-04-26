@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { delay, of } from 'rxjs';
 import { IUser } from 'src/app/shared/interfaces/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -11,10 +12,10 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class ProfileComponent {
 
-  imageSrc: string = '';
+  imageSrc: string;
 
   get user(): IUser {
-    return this.authService.userData as IUser
+    return this.authService.userData as IUser;
   }
 
   myForm = new FormGroup({
@@ -26,10 +27,6 @@ export class ProfileComponent {
     private userService: UserService,
     private authService: AuthService) {
     this.downloadAvatar();
-  }
-
-  get f() {
-    return this.myForm.controls;
   }
 
   onFileChange(event: any) {
@@ -59,15 +56,28 @@ export class ProfileComponent {
       .catch((err) => alert(err.message));
   }
 
-  resetPassword(){
-  }
-  
   private downloadAvatar() {
-    const clientId = this.user.uid;
+    let clientId = this.user?.uid;
+    if (!clientId) {
+      clientId = JSON.parse(localStorage.getItem('user') as string).uid;
+    }
 
     this.userService.getUserById(clientId)
-      .subscribe((data) => {
-        this.imageSrc = data.photoURL;
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.imageSrc = data.photoURL;
+          }
+        },
+        error: (err) => { alert(err.message); },
       })
+
+    of(null).pipe(
+      delay(1000)
+    ).subscribe(() => {
+      if (!this.imageSrc) {
+        this.imageSrc = `../../../assets/images/anon.png`;
+      }
+    })
   }
 }

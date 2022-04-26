@@ -1,1 +1,32 @@
-<p>home works!</p>
+<div class="container">
+    <app-profile></app-profile>
+    <div class="tables-container">
+        <mat-tab-group>
+            <mat-tab label="All">
+                <table mat-table [dataSource]="tableData" class="mat-elevation-z8 demo-table">
+                    
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef>Title</th>
+                        <td mat-cell *matCellDef="let element">{{element.title}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="authorId">
+                        <th mat-header-cell *matHeaderCellDef>Author</th>
+                        <td mat-cell *matCellDef="let element">{{element.authorId}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell *matHeaderCellDef>Created On</th>
+                        <td mat-cell *matCellDef="let element">{{element.createdOn | date}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </mat-tab>
+            <mat-tab label="Mine"> Mine </mat-tab>
+        </mat-tab-group>
+    </div>
+    <button [disabled]="disable_prev" (click)="previousPage()" class="btn btn-info">PREVIOUS PAGE</button>
+    <button [disabled]="disable_next" (click)="nextPage()" class="btn btn-info">NEXT PAGE</button>
+</div>

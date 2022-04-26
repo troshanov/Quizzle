@@ -8,7 +8,7 @@
                 <ng-template matStepLabel>Fill out your quizz title</ng-template>
                 <mat-form-field appearance="fill">
                     <mat-label>Title</mat-label>
-                    <input matInput #titleInput="matInput" placeholder="Email Address" formControlName="title" required>
+                    <input matInput #titleInput="matInput" placeholder="Title" formControlName="title" required>
                     <mat-error *ngIf="titleFormGroup.get('title')?.hasError('required')">Title field is required</mat-error>
                     <mat-error *ngIf="titleFormGroup.get('title')?.hasError('minlength')">Must be at least 4 chars</mat-error>
                 </mat-form-field>
@@ -91,7 +91,7 @@
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Done</ng-template>
-            <p>You are now done.</p>
+            <p>You are now done. Click on Create to complete the Quizz.</p>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button (click)="stepper.reset()">Reset</button>

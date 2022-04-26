@@ -14,6 +14,9 @@ import { ProfileComponent } from './profile/profile.component';
   imports: [
     CommonModule,
     SharedModule
+  ],
+  exports:[
+    ProfileComponent
   ]
 })
 export class AuthModule { }

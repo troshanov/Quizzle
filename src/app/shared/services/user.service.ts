@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IQuestion } from '../interfaces/question';
 
 @Injectable({
@@ -12,9 +12,13 @@ export class UserService {
 
   createUserQuizz(authorId: string, quizzTitle: string, questions: IQuestion[]): Promise<any> {
     return this.firestore
-      .collection('authors').doc(authorId)
       .collection('quizzes').doc(quizzTitle)
-      .set(Object.assign({}, questions));
+      .set({
+        questions: Object.assign([], questions),
+        authorId: authorId,
+        createdOn: Date.now(),
+        title: quizzTitle
+      });
   }
 
   updateProfilePicture(picture64: string, userId: string): Promise<any> {
@@ -30,5 +34,23 @@ export class UserService {
       .collection('avatars')
       .doc(userId)
       .valueChanges();
+  }
+
+  getAllQuizzes(): Observable<any> {
+    return this.firestore
+      .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').limit(2))
+      .get();
+  }
+
+  getNextSetOfQuizzes(startAfterEl: any): Observable<any> {
+    return this.firestore
+      .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').limit(2).startAfter(startAfterEl))
+      .get();
+  }
+
+  getPreviousSetOfQuizzes(startAtEl:any, endBeforeEl: any ): Observable<any> {
+    return this.firestore
+      .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').startAt(startAtEl).endBefore(endBeforeEl).limit(2))
+      .get();
   }
 }

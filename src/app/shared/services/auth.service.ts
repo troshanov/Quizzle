@@ -12,7 +12,7 @@ import { IUser } from '../interfaces/user';
 export class AuthService {
 
   userData: any; // Save logged in user data
-  
+
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -32,6 +32,7 @@ export class AuthService {
       }
     });
   }
+
   // Sign in with email/password
   SignIn(email: string, password: string) {
     return this.afAuth
@@ -52,7 +53,7 @@ export class AuthService {
         up and returns promise */
         //this.SendVerificationMail();
         this.router.navigate(['login']);
-        
+
         //this.SetUserData(result.user);
       })
       .catch((error) => {
@@ -81,7 +82,7 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
-    return user !== null? true : false;
+    return user !== null ? true : false;
   }
   // Sign in with Google
   GoogleAuth() {

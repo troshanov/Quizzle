@@ -1,29 +1,31 @@
-<div class="container">
-    <div class="profile">
-        <div class="row">
-            <div class="col-3">
-                <div class="mb-2">
-                    <img [src]="imageSrc" alt="default user">
-                </div>
-                <div class="d-flex align-items-end">
-                    <form [formGroup]="myForm">
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <input formControlName="file" id="file" type="file" (change)="onFileChange($event)">
-                            </div>
+<div class="profile">
+    <div *ngIf="user && imageSrc" class="row">
+        <div class="col-3">
+            <div class="mb-2">
+                <img [src]="imageSrc" alt="default user">
+            </div>
+            <div class="d-flex align-items-end">
+                <form [formGroup]="myForm">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <input formControlName="file" id="file" type="file" (change)="onFileChange($event)">
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-6 d-flex align-items-center justify-content-center">
-                <div class="flex">
-                    <p>Email: </p>
-                    <p>{{user!.email}}</p>
-                </div>
-            </div>
-            <div class="col-3 d-flex align-items-end justify-content-center">
-                <button (click)="submit()" class="btn btn-info btn-sm" [disabled]="myForm.invalid" style="margin-right: 1%" type="submit">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <div class="flex">
+                <p>Email: </p>
+                <p>{{user?.email}}</p>
+            </div>
+        </div>
+        <div class="col-3 d-flex align-items-end justify-content-center">
+            <button (click)="submit()" class="btn btn-info btn-sm" [disabled]="myForm.invalid"
+                style="margin-right: 1%" type="submit">Save</button>
+        </div>
+    </div>
+    <div *ngIf="!imageSrc || !user" class="d-flex align-items-center justify-content-center">
+        <mat-spinner></mat-spinner>
     </div>
 </div>

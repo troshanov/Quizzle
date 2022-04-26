@@ -23,7 +23,7 @@
         </div>
         <div *ngIf="authService.isLoggedIn">
             <li class="nav-item mb-1">
-                <a routerLink="quizz/all" class="nav-link text-white">
+                <a routerLink="/" class="nav-link text-white">
                     <mat-icon>home</mat-icon>
                     <label class="nav-label">Home</label>
                 </a>
@@ -50,7 +50,7 @@
     </ul>
     <hr>
     <div *ngIf="authService.isLoggedIn" class="dropdown">
-        <a *ngIf="authService.userData as user" routerLink="profile" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown"
+        <a *ngIf="authService.userData as user" routerLink="home" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown"
             aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
             <strong>{{user.email}}</strong>
