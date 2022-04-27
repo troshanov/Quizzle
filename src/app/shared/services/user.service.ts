@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { IQuestion } from '../interfaces/question';
 
 @Injectable({
@@ -42,15 +42,40 @@ export class UserService {
       .get();
   }
 
+  getAllUserQuizzes(authorId: string): Observable<any> {
+    return this.firestore
+      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').limit(2))
+      .get();
+  }
+
   getNextSetOfQuizzes(startAfterEl: any): Observable<any> {
     return this.firestore
       .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').limit(2).startAfter(startAfterEl))
       .get();
   }
 
-  getPreviousSetOfQuizzes(startAtEl:any, endBeforeEl: any ): Observable<any> {
+  getNextSetOfUserQuizzes(startAfterEl: any, authorId: string): Observable<any> {
+    return this.firestore
+      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').limit(2).startAfter(startAfterEl))
+      .get();
+  }
+
+  getPreviousSetOfQuizzes(startAtEl: any, endBeforeEl: any): Observable<any> {
     return this.firestore
       .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').startAt(startAtEl).endBefore(endBeforeEl).limit(2))
+      .get();
+  }
+
+  getPreviousSetOfUserQuizzes(startAtEl: any, endBeforeEl: any, authorId: string): Observable<any> {
+    return this.firestore
+      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').startAt(startAtEl).endBefore(endBeforeEl).limit(2))
+      .get();
+  }
+
+  getQuizzById(quizzId: string) {
+    return this.firestore
+      .collection('quizzes')
+      .doc(quizzId)
       .get();
   }
 }

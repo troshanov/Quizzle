@@ -6,16 +6,17 @@ import { Renderer2 } from '@angular/core';
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { delay } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
-import { ITokenResponse } from 'src/app/shared/interfaces/token-response';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
-  selector: 'app-random-quizz',
-  templateUrl: './random-quizz.component.html',
-  styleUrls: ['./random-quizz.component.css']
+  selector: 'app-quizz',
+  templateUrl: './quizz.component.html',
+  styleUrls: ['./quizz.component.css']
 })
-export class RandomQuizzComponent {
+export class QuizzComponent {
 
   isLoading: boolean = true;
 
@@ -32,23 +33,30 @@ export class RandomQuizzComponent {
   bonusQuestion: IQuestion | undefined;
   currentAnswers: string[];
   currentCorrectAnswer: string | undefined;
-  questionApiToken: string;
+  quizzId: string;
 
-  dialogConfigs: MatDialogConfig = new MatDialogConfig()
+  dialogConfigs: MatDialogConfig = new MatDialogConfig();
 
   constructor(
     private utilityService: UtilityService,
     private quizzService: QuizzService,
     private render: Renderer2,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private usersService: UserService) {
 
-    this.quizzService.getToken()
-      .subscribe((data) => {
-        this.questionApiToken = (data as ITokenResponse).token;
-        this.getQuestions();
-      });
+    this.route.queryParams.subscribe(params => {
+      this.quizzId = decodeURIComponent(params['id']);
 
-    this.dialogConfigs.disableClose = true;
+      if (this.quizzId) {
+        this.getQuestions(false);
+      }
+      else {
+        this.getQuestions(true);
+      }
+
+      this.dialogConfigs.disableClose = true;
+    })
   }
 
   fiftyFiftyClickHandler(answers: MatSelectionList) {
@@ -87,18 +95,32 @@ export class RandomQuizzComponent {
       .subscribe(() => this.loadNextQuestion());
   }
 
-  getQuestions() {
-    this.quizzService.getQuestions(this.questionApiToken)
+  getQuestions(isRandom: boolean) {
+    if(isRandom){
+      this.quizzService.getRandomQuestions()
       .subscribe((data: any) => {
-        this.questions = data.results;
+        this.questions = (data.results as IQuestion[]);
         this.bonusQuestion = this.questions.shift();
         this.fiftyfiftyIsUsed = false;
         this.skipQuestionIsUsed = false;
-        this.numberOfQuestions = data.results.length;
+        this.numberOfQuestions = this.questions.length;
         this.currentQuestionNumber = 0;
         this.loadNextQuestion();
         this.isLoading = false;
       });
+    }else {
+      this.usersService.getQuizzById(this.quizzId)
+      .subscribe((data: any) => {
+        this.questions = data.data().questions;
+        this.bonusQuestion = this.questions.shift();
+        this.fiftyfiftyIsUsed = false;
+        this.skipQuestionIsUsed = false;
+        this.numberOfQuestions = this.questions.length;
+        this.currentQuestionNumber = 0;
+        this.loadNextQuestion();
+        this.isLoading = false;
+      })
+    }
   }
 
   private calculateProgress() {

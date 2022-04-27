@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { UserService } from '../shared/services/user.service';
 })
 export class HomeComponent {
 
+  uesrId: string;
   tableData: any[] = [];
   firstInResponse: any = [];
   lastInResponse: any = [];
@@ -16,14 +18,22 @@ export class HomeComponent {
   disable_next: boolean = false;
   disable_prev: boolean = true;
 
+  mineTabActivated: boolean = false;
+
   displayedColumns: string[] = ['title', 'authorId', 'createdOn'];
 
-  constructor(private userService: UserService) { 
+  constructor(
+    private userService: UserService,
+    private router: Router) {
+
+    this.uesrId = JSON.parse(localStorage.getItem('user') as string).email;
     this.getQuizzes();
   }
 
-  getQuizzes() {
-    this.userService.getAllQuizzes()
+  async getQuizzes() {
+    const funcToCall = this.mineTabActivated ? 'getAllUserQuizzes' : 'getAllQuizzes';
+
+    this.userService[funcToCall](this.uesrId)
       .subscribe((data) => {
         if (!data.docs.length) {
           console.log('No data available');
@@ -49,6 +59,7 @@ export class HomeComponent {
       .subscribe((data) => {
         if (!data.docs.length) {
           console.log('No data available');
+          this.disable_next = true;
         }
         else {
           this.firstInResponse = data.docs[0];
@@ -104,6 +115,20 @@ export class HomeComponent {
       });
   }
 
+  switchTab(){
+    this.mineTabActivated = !this.mineTabActivated;
+    this.firstInResponse = [];
+    this.lastInResponse = [];
+    this.prev_strt_at = [];
+    this.pagination_clicked_count = 0;
+    this.disable_next = false;
+    this.disable_prev = true;
+    this.getQuizzes();
+  }
+
+  goToQuizz(row: any){
+    this.router.navigate(['/quizz'], {queryParams: {id: row.title}});
+  }
   // add a document
   private push_prev_startAt(prev_first_doc: any) {
     this.prev_strt_at.push(prev_first_doc);

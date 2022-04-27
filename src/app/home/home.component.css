@@ -3,15 +3,19 @@
 }
 
 .mat-row .mat-cell {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
     cursor: pointer;
 }
 
 .mat-row:hover .mat-cell {
-    border-color: currentColor;
+    background: rgb(177, 146, 228, 1) !important;
 }
 
-.demo-row-is-clicked {
-    font-weight: bold;
+.mat-table tbody, mat-row, [mat-row]{
+    background: rgb(177, 146, 228, 0.5) !important;
+}
+
+.mat-table {
+    background: transparent;
 }

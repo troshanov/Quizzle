@@ -16,6 +16,10 @@ export class QuizzService {
     return this.client.get<any>(`${apiUrl}/api.php?amount=16&type=multiple&encode=url3986&category=${category}&token=${token}&difficulty=${difficulty}`);
   }
 
+  getRandomQuestions(){
+    return this.client.get<any>(`${apiUrl}/api.php?amount=16&type=multiple&encode=url3986`);
+  }
+
   getCategories(): Observable<any> {
     return this.client.get<any>(`${apiUrl}/api_category.php`);
   }

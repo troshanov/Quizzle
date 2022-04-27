@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -11,17 +12,24 @@ export class LoginComponent {
 
   loginFailed: boolean = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public ngZone: NgZone ) { }
 
-  async onLogin(form: NgForm) {
+  onLogin(form: NgForm) {
     this.loginFailed = false;
     
     const email = form.controls["emailInput"].value;
     const password = form.controls["password"].value;
 
-    await this.authService.SignIn(email, password)
+    this.authService.SignIn(email, password)
     .catch(() => {
       this.loginFailed = true;
     })
+
+    if(!this.loginFailed){
+      this.router.navigate(['../home']);
+    }
   }
 }

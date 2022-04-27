@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RandomQuizzComponent } from './random-quizz/random-quizz.component';
+import { QuizzComponent } from './quizz/quizz.component';
 import { SharedModule } from '../shared/shared.module';
 import { QuizzRoutingModule } from './quizz-routing.module';
 import { SuccessDialogComponent } from './dialogs/success-dialog/success-dialog.component';
@@ -11,7 +11,7 @@ import { CreateQuizzComponent } from './create-quizz/create-quizz.component';
 
 @NgModule({
   declarations: [
-    RandomQuizzComponent,
+    QuizzComponent,
     SuccessDialogComponent,
     FailureDialogComponent,
     CreateQuizzComponent,

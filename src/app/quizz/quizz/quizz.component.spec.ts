@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RandomQuizzComponent } from './random-quizz.component';
+import { QuizzComponent } from './quizz.component';
 
 describe('RandomQuizzComponent', () => {
-  let component: RandomQuizzComponent;
-  let fixture: ComponentFixture<RandomQuizzComponent>;
+  let component: QuizzComponent;
+  let fixture: ComponentFixture<QuizzComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RandomQuizzComponent ]
+      declarations: [ QuizzComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RandomQuizzComponent);
+    fixture = TestBed.createComponent(QuizzComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
