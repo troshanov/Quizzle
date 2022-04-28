@@ -1,6 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { delay, of } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -28,8 +29,12 @@ export class LoginComponent {
       this.loginFailed = true;
     })
 
-    if(!this.loginFailed){
-      this.router.navigate(['../home']);
-    }
+    of(null).pipe(delay(500))
+    .subscribe(() => {
+      if(!this.loginFailed){
+        this.router.navigate(['../home']);
+      }
+    });
+
   }
 }

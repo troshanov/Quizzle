@@ -6,10 +6,13 @@ import { QuizzComponent } from "./quizz/quizz.component";
 const routes: Routes = [
     {
         path: 'quizz',
-        pathMatch:'full',
-        component: QuizzComponent,
-        canActivate: [AuthGuard],
         children: [
+            {
+                path:'',
+                pathMatch:'full',
+                component: QuizzComponent,
+                canActivate: [AuthGuard],
+            },
             {
                 path: 'create',
                 pathMatch: 'full',

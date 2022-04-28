@@ -47,16 +47,16 @@ export class QuizzComponent {
 
     this.route.queryParams.subscribe(params => {
       this.quizzId = decodeURIComponent(params['id']);
-
-      if (this.quizzId) {
-        this.getQuestions(false);
-      }
-      else {
-        this.getQuestions(true);
-      }
-
-      this.dialogConfigs.disableClose = true;
     })
+
+    if (this.quizzId !== 'undefined') {
+      this.getQuestions(false);
+    }
+    else {
+      this.getQuestions(true);
+    }
+
+    this.dialogConfigs.disableClose = true;
   }
 
   fiftyFiftyClickHandler(answers: MatSelectionList) {

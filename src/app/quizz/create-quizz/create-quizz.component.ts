@@ -80,7 +80,7 @@ export class CreateQuizzComponent {
     const quizzName = this.titleFormGroup.controls['title'].value;
 
     await this.usersService.createUserQuizz(userId, quizzName, newQuizz)
-      .then(() => this.router.navigate(['/']))
+      .then(() => this.router.navigate(['/home']))
       .catch((error) => alert(error.message));
   }
 
@@ -116,5 +116,13 @@ export class CreateQuizzComponent {
           this.loadedQuestions.push(q);
         });
       });
+  }
+
+  resetQuizz(stepper: any){
+    this.loadedQuestions = [];
+    this.bonusQuestions = [];
+    this.quizzQuestions = [];
+
+    stepper.reset();
   }
 }
