@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -40,7 +40,7 @@ export class HomeComponent {
         }
         else {
           this.firstInResponse = data.docs[0];
-          this.lastInResponse = data.docs[data.docs.length = 1];
+          this.lastInResponse = data.docs[data.docs.length - 1];
 
           this.tableData = [];
           for (let doc of data.docs) {
@@ -55,15 +55,18 @@ export class HomeComponent {
   }
 
   nextPage() {
-    this.userService.getNextSetOfQuizzes(this.lastInResponse)
+    const funcToCall = this.mineTabActivated ? 'getNextSetOfUserQuizzes' : 'getNextSetOfQuizzes';
+
+    this.userService[funcToCall](this.lastInResponse, this.uesrId)
       .subscribe((data) => {
         if (!data.docs.length) {
           console.log('No data available');
           this.disable_next = true;
+          return;
         }
         else {
           this.firstInResponse = data.docs[0];
-          this.lastInResponse = data.docs[data.docs.length = 1];
+          this.lastInResponse = data.docs[data.docs.length - 1];
 
           this.tableData = [];
           for (let doc of data.docs) {
@@ -72,7 +75,7 @@ export class HomeComponent {
 
           this.pagination_clicked_count++;
           this.push_prev_startAt(this.firstInResponse);
-          if (data.docs.length < 2) {
+          if (data.docs.length < 10) {
             // disable next button if data fetched is less than 5 - means no more data left to load
             // because limit ti get data is set to 5
             this.disable_next = true;
@@ -87,7 +90,10 @@ export class HomeComponent {
   }
 
   previousPage() {
-    this.userService.getPreviousSetOfQuizzes(this.get_prev_startAt(), this.firstInResponse)
+
+    const funcToCall = this.mineTabActivated ? 'getPreviousSetOfUserQuizzes' : 'getPreviousSetOfQuizzes';
+    
+    this.userService[funcToCall](this.get_prev_startAt(), this.firstInResponse, this.uesrId)
       .subscribe((data) => {
         if (!data.docs.length) {
           console.log('No data available');
@@ -116,6 +122,7 @@ export class HomeComponent {
   }
 
   switchTab(){
+    this.tableData = [];
     this.mineTabActivated = !this.mineTabActivated;
     this.firstInResponse = [];
     this.lastInResponse = [];

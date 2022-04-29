@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -11,22 +10,9 @@ export class SidebarComponent {
 
   isLogged = false;
 
-  constructor(
-    private render: Renderer2,
-    public authService: AuthService) { }
-  MouseOverHandler(event: any) {
-    if (event.target.tagName.toLowerCase() === 'a') {
-      this.render.addClass(event.target, "active");
-    }
-  }
-
-  MouseOutHandler(event: any) {
-    if (event.target.tagName.toLowerCase() === 'a') {
-      this.render.removeClass(event.target, "active");
-    }
-  }
-
-  logout(){
+  constructor(public authService: AuthService) { }
+    
+  logout() {
     this.authService.SignOut();
   }
 }

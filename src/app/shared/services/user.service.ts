@@ -38,37 +38,37 @@ export class UserService {
 
   getAllQuizzes(): Observable<any> {
     return this.firestore
-      .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').limit(2))
+      .collection('quizzes', ref => ref.limit(10).orderBy('createdOn', 'desc'))
       .get();
   }
 
   getAllUserQuizzes(authorId: string): Observable<any> {
     return this.firestore
-      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').limit(2))
+      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').limit(10))
       .get();
   }
 
   getNextSetOfQuizzes(startAfterEl: any): Observable<any> {
     return this.firestore
-      .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').limit(2).startAfter(startAfterEl))
+      .collection('quizzes', ref => ref.limit(10).orderBy('createdOn', 'desc').startAfter(startAfterEl))
       .get();
   }
 
   getNextSetOfUserQuizzes(startAfterEl: any, authorId: string): Observable<any> {
     return this.firestore
-      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').limit(2).startAfter(startAfterEl))
+      .collection('quizzes', ref => ref.where('authorId', '==', authorId).limit(10).orderBy('createdOn', 'desc').startAfter(startAfterEl))
       .get();
   }
 
   getPreviousSetOfQuizzes(startAtEl: any, endBeforeEl: any): Observable<any> {
     return this.firestore
-      .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').startAt(startAtEl).endBefore(endBeforeEl).limit(2))
+      .collection('quizzes', ref => ref.orderBy('createdOn', 'desc').startAt(startAtEl).endBefore(endBeforeEl).limit(10))
       .get();
   }
 
   getPreviousSetOfUserQuizzes(startAtEl: any, endBeforeEl: any, authorId: string): Observable<any> {
     return this.firestore
-      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').startAt(startAtEl).endBefore(endBeforeEl).limit(2))
+      .collection('quizzes', ref => ref.where('authorId', '==', authorId).orderBy('createdOn', 'desc').startAt(startAtEl).endBefore(endBeforeEl).limit(10))
       .get();
   }
 

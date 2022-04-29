@@ -1,49 +1,48 @@
 <div class="d-flex flex-column flex-shrink-0 p-2 text-white bg-dark" style="height: 100%;">
     <div class="fs-4 row dashboard-container">
-        <div class="offset-4 col-3">
-            <img class="dashboard-logo" src="../../../assets/images/dashboard-logo.png" alt="">
+        <div class="offset-3 col-3">
+            Dashboard
         </div>
     </div>
     <hr>
-    <ul class="nav p-2 fs-5 nav-pills flex-column mb-auto" (mouseout)="MouseOutHandler($event)"
-        (mouseover)="MouseOverHandler($event)">
+    <ul class="nav p-2 fs-5 nav-pills flex-column mb-auto">
         <div *ngIf="!authService.isLoggedIn">
             <li class="nav-item mb-1">
-                <a routerLink="login" class="nav-link text-white">
+                <a routerLink="login" class="nav-link text-white" appHighlight>
                     <mat-icon>input</mat-icon>
-                    <label class="nav-label">Login</label>
+                    Login
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a routerLink="register" class="nav-link text-white">
+                <a routerLink="register" class="nav-link text-white" appHighlight>
                     <mat-icon>person_add</mat-icon>
-                    <label class="nav-label">Register</label>
+                    Register
                 </a>
             </li>
         </div>
         <div *ngIf="authService.isLoggedIn">
             <li class="nav-item mb-1">
-                <a routerLink="/" class="nav-link text-white">
+                <a routerLink="/" class="nav-link text-white" appHighlight>
                     <mat-icon>home</mat-icon>
-                    <label class="nav-label">Home</label>
+                    Home
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a routerLink="quizz/create" class="nav-link text-white">
+                <a routerLink="quizz/create" class="nav-link text-white" appHighlight>
                     <mat-icon>create</mat-icon>
-                    <label class="nav-label">Create Quizz</label>
+                    Create Quizz
                 </a>
             </li>
             <li class="nav-item mb-1">
-                <a routerLink="quizz" class="nav-link text-white">
+                <a routerLink="quizz" class="nav-link text-white" appHighlight>
                     <mat-icon>shuffle</mat-icon>
-                    <label class="nav-label">Random Quizz</label>
+                    Random Quizz
                 </a>
             </li>
             <li class="nav-item">
-                <a (click)="logout()" href="javascript:void(0)" class="nav-link text-white">
+                <a (click)="logout()" href="javascript:void(0)" class="nav-link text-white" appHighlight>
                     <mat-icon>exit_to_app</mat-icon>
-                    <label class="nav-label">Logout</label>
+                    Logout
                 </a>
             </li>
         </div>
@@ -52,7 +51,7 @@
     <div *ngIf="authService.isLoggedIn" class="dropdown">
         <a *ngIf="authService.userData as user" routerLink="home" class="d-flex align-items-center text-white text-decoration-none" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            <img src="../../../assets/images/dashboard-logo.png" alt="" width="32" height="32" class="rounded-circle me-2">
             <strong>{{user.email}}</strong>
         </a>
     </div>

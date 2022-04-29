@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
 import { IQuestion } from 'src/app/shared/interfaces/question';
 import { QuizzService } from 'src/app/shared/services/quizz.service';
@@ -141,6 +141,7 @@ export class QuizzComponent {
 
       //Setup current question and answers
       this.utilityService.decodeQuestionStringValues(this.currentQuestion);
+
       this.setAnswers(this.currentQuestion);
     }
     else {
