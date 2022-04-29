@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
 import { IQuestion } from 'src/app/shared/interfaces/question';
 import { QuizzService } from 'src/app/shared/services/quizz.service';
@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SuccessDialogComponent } from '../dialogs/success-dialog/success-dialog.component';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/shared/services/user.service';
+import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
 @Component({
   selector: 'app-quizz',
@@ -43,7 +43,7 @@ export class QuizzComponent {
     private render: Renderer2,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private usersService: UserService) {
+    private fireService: FirebaseService) {
 
     this.route.queryParams.subscribe(params => {
       this.quizzId = decodeURIComponent(params['id']);
@@ -109,7 +109,7 @@ export class QuizzComponent {
         this.isLoading = false;
       });
     }else {
-      this.usersService.getQuizzById(this.quizzId)
+      this.fireService.getQuizzById(this.quizzId)
       .subscribe((data: any) => {
         this.questions = data.data().questions;
         this.bonusQuestion = this.questions.shift();

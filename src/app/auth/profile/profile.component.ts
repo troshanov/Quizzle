@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { delay, of } from 'rxjs';
 import { IUser } from 'src/app/shared/interfaces/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UserService } from 'src/app/shared/services/user.service';
+import { FirebaseService } from 'src/app/shared/services/firebase.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +24,7 @@ export class ProfileComponent {
   });
 
   constructor(
-    private userService: UserService,
+    private fireService: FirebaseService,
     private authService: AuthService) {
     this.downloadAvatar();
   }
@@ -51,7 +51,7 @@ export class ProfileComponent {
 
     const clientId = (this.authService.userData as IUser).uid;
     const content = this.myForm.controls['fileSource'].value;
-    this.userService.updateProfilePicture(content, clientId)
+    this.fireService.updateProfilePicture(content, clientId)
       .then(() => this.myForm.reset())
       .catch((err) => alert(err.message));
   }
@@ -62,7 +62,7 @@ export class ProfileComponent {
       clientId = JSON.parse(localStorage.getItem('user') as string).uid;
     }
 
-    this.userService.getUserById(clientId)
+    this.fireService.getUserById(clientId)
       .subscribe({
         next: (data) => {
           if (data) {

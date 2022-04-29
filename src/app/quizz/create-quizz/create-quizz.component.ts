@@ -7,7 +7,7 @@ import { IQuestion } from 'src/app/shared/interfaces/question';
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { MatRadioChange } from '@angular/material/radio/radio';
 import { ITokenResponse } from 'src/app/shared/interfaces/token-response';
-import { UserService } from 'src/app/shared/services/user.service';
+import { FirebaseService } from 'src/app/shared/services/firebase.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { IUser } from 'src/app/shared/interfaces/user';
 import { Router } from '@angular/router';
@@ -46,7 +46,7 @@ export class CreateQuizzComponent {
     private fb: FormBuilder,
     private quizzService: QuizzService,
     private utilityService: UtilityService,
-    private usersService: UserService,
+    private fireService: FirebaseService,
     private authService: AuthService,
     private router: Router) {
     quizzService.getCategories()
@@ -79,7 +79,7 @@ export class CreateQuizzComponent {
     const userId = (this.authService.userData as IUser).email;
     const quizzName = this.titleFormGroup.controls['title'].value;
 
-    await this.usersService.createUserQuizz(userId, quizzName, newQuizz)
+    await this.fireService.createUserQuizz(userId, quizzName, newQuizz)
       .then(() => this.router.navigate(['/home']))
       .catch((error) => alert(error.message));
   }

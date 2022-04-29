@@ -11,15 +11,12 @@ import { UrlDecoderPipe } from './pipes/url-decoder.pipe';
 import { UtilityService } from './services/utility.service';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { LoaderComponent } from './loader/loader.component';
-import { UserService } from './services/user.service';
-import { DropboxService } from './services/dropbox.service';
-import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { FirebaseService } from './services/firebase.service';
 
 @NgModule({
   declarations: [
     UrlDecoderPipe,
-    LoaderComponent,
-    SafeHtmlPipe
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -40,13 +37,11 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     HttpClientModule,
     UrlDecoderPipe,
     LoaderComponent,
-    SafeHtmlPipe
   ],
   providers:[
     QuizzService,
     UtilityService,
-    UserService,
-    DropboxService
+    FirebaseService,
   ]
 })
 export class SharedModule { }

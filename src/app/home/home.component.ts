@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {  Router } from '@angular/router';
-import { UserService } from '../shared/services/user.service';
+import { FirebaseService } from '../shared/services/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +23,7 @@ export class HomeComponent {
   displayedColumns: string[] = ['title', 'authorId', 'createdOn'];
 
   constructor(
-    private userService: UserService,
+    private fireService: FirebaseService,
     private router: Router) {
 
     this.uesrId = JSON.parse(localStorage.getItem('user') as string).email;
@@ -33,7 +33,7 @@ export class HomeComponent {
   async getQuizzes() {
     const funcToCall = this.mineTabActivated ? 'getAllUserQuizzes' : 'getAllQuizzes';
 
-    this.userService[funcToCall](this.uesrId)
+    this.fireService[funcToCall](this.uesrId)
       .subscribe((data) => {
         if (!data.docs.length) {
           console.log('No data available');
@@ -57,7 +57,7 @@ export class HomeComponent {
   nextPage() {
     const funcToCall = this.mineTabActivated ? 'getNextSetOfUserQuizzes' : 'getNextSetOfQuizzes';
 
-    this.userService[funcToCall](this.lastInResponse, this.uesrId)
+    this.fireService[funcToCall](this.lastInResponse, this.uesrId)
       .subscribe((data) => {
         if (!data.docs.length) {
           console.log('No data available');
@@ -93,7 +93,7 @@ export class HomeComponent {
 
     const funcToCall = this.mineTabActivated ? 'getPreviousSetOfUserQuizzes' : 'getPreviousSetOfQuizzes';
     
-    this.userService[funcToCall](this.get_prev_startAt(), this.firstInResponse, this.uesrId)
+    this.fireService[funcToCall](this.get_prev_startAt(), this.firstInResponse, this.uesrId)
       .subscribe((data) => {
         if (!data.docs.length) {
           console.log('No data available');

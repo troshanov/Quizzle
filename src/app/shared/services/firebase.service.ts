@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IQuestion } from '../interfaces/question';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class FirebaseService {
 
   constructor(private firestore: AngularFirestore) { }
 
